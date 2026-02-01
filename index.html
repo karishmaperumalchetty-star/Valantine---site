@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Be My Valentine</title>
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      font-family: Arial, sans-serif;
+    }
+
+    .heart {
+      position: absolute;
+      bottom: -20px;
+      animation: floatUp linear infinite;
+      opacity: 0.8;
+    }
+
+    @keyframes floatUp {
+      from { transform: translateY(0); opacity: 1; }
+      to { transform: translateY(-100vh); opacity: 0; }
+    }
+
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      width: 320px;
+      z-index: 10;
+    }
+
+    h1 { color: #ff4d6d; }
+    p { min-height: 40px; color: #555; }
+
+    button {
+      padding: 10px 22px;
+      border: none;
+      border-radius: 25px;
+      font-size: 16px;
+      cursor: pointer;
+      margin: 10px;
+    }
+
+    #yes { background: #ff4d6d; color: white; }
+    #no { background: #ffd6dc; color: #ff4d6d; }
+
+    /* Typing cursor */
+    .cursor {
+      border-right: 3px solid white;
+      animation: blink 0.7s infinite;
+      padding-right: 5px;
+    }
+
+    @keyframes blink {
+      0%, 50%, 100% { border-color: transparent; }
+      25%, 75% { border-color: white; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h1>Will you be my Valentine? 💌</h1>
+    <p id="message"></p>
+
+    <button onclick="yesClicked()">YES 💕</button>
+    <button onclick="noClicked()">NO 🙈</button>
+  </div>
+
+  <script>
+    /* YES – typing animation */
+    function yesClicked() {
+      document.body.innerHTML = `
+        <h1 id="typing" style="color:white; font-size:36px; text-align:center;"></h1>
+      `;
+      document.body.style.background = "#ff4d6d";
+      document.body.style.display = "flex";
+      document.body.style.justifyContent = "center";
+      document.body.style.alignItems = "center";
+
+      const text = "Happy Valentine's Day Sanjay 💖";
+      let i = 0;
+      const speed = 100;
+
+      function typeText() {
+        if (i < text.length) {
+          document.getElementById("typing").innerHTML =
+            text.substring(0, i + 1) + "<span class='cursor'></span>";
+          i++;
+          setTimeout(typeText, speed);
+        } else {
+          document.getElementById("typing").innerHTML = text;
+        }
+      }
+      typeText();
+    }
+
+    /* NO – cute denial */
+    function noClicked() {
+      const replies = [
+        "Aww no? That’s a little sad 🥺💔",
+        "Are you sure? I tried my best 😌💗",
+        "Okay… still sending hugs 🤗💖",
+        "My heart says try again 💞"
+      ];
+      document.getElementById("message").innerText =
+        replies[Math.floor(Math.random() * replies.length)];
+    }
+
+    /* Floating hearts */
+    setInterval(() => {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerHTML = "❤️";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = Math.random() * 15 + 15 + "px";
+      heart.style.animationDuration = Math.random() * 3 + 4 + "s";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 7000);
+    }, 300);
+  </script>
+
+</body>
+</html>
